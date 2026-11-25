@@ -1,0 +1,5 @@
+build --cxxopt=-std=c++23
+build --host_cxxopt=-std=c++23
+build --cxxopt=-Wall --cxxopt=-Wextra --cxxopt=-Werror
+test --test_output=errors
+
