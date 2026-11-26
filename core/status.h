@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string_view>
 #include <utility>
 
@@ -12,7 +13,9 @@ namespace jobtracker {
         OfferAccepted,
         Rejected,
         Withdrawn,
-        Ghosted
+        Ghosted,
+        HrScreen,
+        Interview
     };
 
     constexpr std::string_view to_string(const Status status) {
@@ -34,8 +37,14 @@ namespace jobtracker {
                 return "Withdrawn";
             case Status::Ghosted:
                 return "Ghosted";
+            case Status::HrScreen:
+                return "HR Screen";
+            case Status::Interview:
+                return "Interview";
         }
         std::unreachable();
     }
+
+    std::optional<Status> from_string(std::string_view text);
 
 }
