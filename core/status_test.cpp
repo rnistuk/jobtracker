@@ -16,7 +16,6 @@ TEST_P(StatusConversionTest, ConvertsToText) {
 
 INSTANTIATE_TEST_SUITE_P(AllStatuses, StatusConversionTest, ::testing::Values(
     StatusCase{jobtracker::Status::Applied, "Applied"},
-    StatusCase{jobtracker::Status::Pending, "Pending"},
     StatusCase{jobtracker::Status::TechInterview, "Tech Interview"},
     StatusCase{jobtracker::Status::OfferReceived, "Offer Received"},
     StatusCase{jobtracker::Status::OfferAccepted, "Offer Accepted"},
@@ -35,4 +34,16 @@ INSTANTIATE_TEST_SUITE_P(AllStatuses, StatusConversionTest, ::testing::Values(
 
 TEST(AllStatuses, ConvertsToTextReturnsNullopt) {
     EXPECT_EQ(std::nullopt, jobtracker::from_string("Invalid"));
+}
+
+TEST(StatusRoundTrip, EveryStatusSurvivesRoundTrip) {
+    for (int i = 0; i < static_cast<int>(jobtracker::Status::EndSentinel); ++i) {
+        auto status{static_cast<jobtracker::Status>(i)};
+        auto text{jobtracker::to_string(status)};
+        EXPECT_EQ(status, jobtracker::from_string(text));
+    }
+}
+
+TEST(Status, BadStatusNameThrowsExceptionInFromString) {
+    EXPECT_THROW(jobtracker::to_string(jobtracker::Status::EndSentinel), std::logic_error);
 }

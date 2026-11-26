@@ -1,56 +1,43 @@
 #include "status.h"
 
-#include <string>
+#include <array>
+#include <algorithm>
+#include <stdexcept>
 
 namespace jobtracker {
+    namespace {
+        struct StatusName {
+            Status status;
+            std::string_view name;
+        };
+
+        constexpr auto status_names = std::to_array<StatusName>({
+            {jobtracker::Status::Applied, "Applied"},
+            {jobtracker::Status::TechInterview, "Tech Interview"},
+            {jobtracker::Status::OfferReceived, "Offer Received"},
+            {jobtracker::Status::OfferAccepted, "Offer Accepted"},
+            {jobtracker::Status::Rejected, "Rejected"},
+            {jobtracker::Status::Withdrawn, "Withdrawn"},
+            {jobtracker::Status::Ghosted, "Ghosted"},
+            {jobtracker::Status::HrScreen, "HR Screen"},
+            {jobtracker::Status::Interview, "Interview"}
+        });
+        static_assert(status_names.size() == static_cast<std::size_t>(Status::EndSentinel),
+               "status_names is missing an entry");
+    }
+
     std::string_view to_string(const Status status) {
-        switch (status) {
-            case Status::Applied:
-                return "Applied";
-            case Status::Pending:
-                return "Pending";
-            case Status::TechInterview:
-                return "Tech Interview";
-            case Status::OfferReceived:
-                return "Offer Received";
-            case Status::OfferAccepted:
-                return "Offer Accepted";
-            case Status::Rejected:
-                return "Rejected";
-            case Status::Withdrawn:
-                return "Withdrawn";
-            case Status::Ghosted:
-                return "Ghosted";
-            case Status::HrScreen:
-                return "HR Screen";
-            case Status::Interview:
-                return "Interview";
-        }
-        std::unreachable();
+        auto it = std::ranges::find(status_names, status, &StatusName::status);
+        if ( it != status_names.end())
+            return it->name;
+
+        throw std::logic_error("to_string: Status has no entry in status_names");
     }
 
     std::optional<Status> from_string(std::string_view text) {
-        if (text == "Applied") {
-            return std::optional<Status>(Status::Applied);
-        } else if (text == "Pending") {
-            return std::optional<Status>(Status::Pending);
-        } else if(text == "Tech Interview") {
-            return std::optional<Status>(Status::TechInterview);
-        } else if (text == "Offer Received") {
-            return std::optional<Status>(Status::OfferReceived);
-        } else if (text == "Offer Accepted") {
-            return std::optional<Status>(Status::OfferAccepted);
-        } else if (text == "Rejected") {
-            return std::optional<Status>(Status::Rejected);
-        } else if (text == "Withdrawn") {
-            return std::optional<Status>(Status::Withdrawn);
-        } else if (text == "Ghosted") {
-            return std::optional<Status>(Status::Ghosted);
-        } else if (text == "HR Screen") {
-            return std::optional<Status>(Status::HrScreen);
-        } else if (text == "Interview") {
-            return std::optional<Status>(Status::Interview);
-        }
+        auto it = std::ranges::find(status_names, text, &StatusName::name);
+        if ( it != status_names.end())
+            return it->status;
         return std::nullopt;
     }
 
