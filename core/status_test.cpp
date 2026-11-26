@@ -33,4 +33,6 @@ INSTANTIATE_TEST_SUITE_P(AllStatuses, StatusConversionTest, ::testing::Values(
     }
 );
 
-
+TEST(AllStatuses, ConvertsToTextReturnsNullopt) {
+    EXPECT_EQ(std::nullopt, jobtracker::from_string("Invalid"));
+}
