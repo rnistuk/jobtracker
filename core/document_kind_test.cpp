@@ -1,7 +1,8 @@
 #include "core/document_kind.h"
 
-#include <algorithm>
 #include <gtest/gtest.h>
+#include <stdexcept>
+#include <string>
 
 struct DocumentKindCase {
     jobtracker::DocumentKind kind;

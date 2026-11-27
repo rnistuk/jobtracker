@@ -1,7 +1,8 @@
 #include "core/status.h"
 
-#include <algorithm>
 #include <gtest/gtest.h>
+#include <stdexcept>
+#include <string>
 
 struct StatusCase {
     jobtracker::Status status;

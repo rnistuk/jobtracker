@@ -2,6 +2,7 @@
 
 #include <array>
 #include <algorithm>
+#include <cstddef>
 #include <stdexcept>
 
 namespace jobtracker {

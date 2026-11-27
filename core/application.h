@@ -11,7 +11,6 @@ namespace jobtracker {
         std::string company;
         std::string role;
         Status status {Status::Applied};
-        std::chrono::year_month_day date_applied;
-
+        std::chrono::year_month_day date_applied{};
     };
 }
