@@ -42,3 +42,14 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [":status"],
 )
+
+cc_test(
+    name = "application_test",
+    size = "small",
+    srcs = ["application_test.cpp"],
+    deps = [
+        ":application",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
