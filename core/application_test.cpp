@@ -5,7 +5,7 @@
 #include <type_traits>
 
 static_assert(std::is_aggregate_v<jobtracker::Application>,
-                "Application must stay an aggregate so designated initializers work");
+              "Application must stay an aggregate so designated initializers work");
 
 TEST(ApplicationTest, DefaultStatus) {
     EXPECT_EQ(jobtracker::Application().status, jobtracker::Status::Applied);

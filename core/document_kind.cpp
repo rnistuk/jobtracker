@@ -16,11 +16,12 @@ namespace jobtracker {
             {DocumentKind::JobDescription, "Job Description"},
             {DocumentKind::Resume, "Resume"},
             {DocumentKind::CoverLetter, "Cover Letter"},
-            {DocumentKind::Other, "Other"}
+            {DocumentKind::Other, "Other"},
         });
-        static_assert(document_kind_names.size() == static_cast<std::size_t>(DocumentKind::EndSentinel),
-               "document_kind_names is missing an entry");
-    }
+        static_assert(document_kind_names.size() ==
+                          static_cast<std::size_t>(DocumentKind::EndSentinel),
+                      "document_kind_names is missing an entry");
+    } // namespace
 
     std::string_view to_string(const DocumentKind kind) {
         auto it = std::ranges::find(document_kind_names, kind, &DocumentKindName::kind);
@@ -37,4 +38,4 @@ namespace jobtracker {
             return it->kind;
         return std::nullopt;
     }
-}
+} // namespace jobtracker
