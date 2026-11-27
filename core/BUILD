@@ -9,12 +9,13 @@ cc_library(
 
 cc_test(
     name = "status_test",
+    size = "small",
     srcs = ["status_test.cpp"],
     deps = [
         ":status",
+        "@googletest//:gtest",
         "@googletest//:gtest_main",
     ],
-    size = "small",
 )
 
 cc_library(
@@ -26,11 +27,18 @@ cc_library(
 
 cc_test(
     name = "document_kind_test",
+    size = "small",
     srcs = ["document_kind_test.cpp"],
     deps = [
         ":document_kind",
+        "@googletest//:gtest",
         "@googletest//:gtest_main",
     ],
-    size = "small",
 )
 
+cc_library(
+    name = "application",
+    hdrs = ["application.h"],
+    visibility = ["//visibility:public"],
+    deps = [":status"],
+)

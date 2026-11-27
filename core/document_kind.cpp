@@ -1,4 +1,4 @@
-#include "document_kind.h"
+#include "core/document_kind.h"
 
 #include <algorithm>
 #include <array>
