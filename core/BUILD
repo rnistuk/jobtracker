@@ -49,6 +49,7 @@ cc_test(
     srcs = ["application_test.cpp"],
     deps = [
         ":application",
+        ":status",
         "@googletest//:gtest",
         "@googletest//:gtest_main",
     ],
