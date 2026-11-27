@@ -17,3 +17,20 @@ cc_test(
     size = "small",
 )
 
+cc_library(
+    name = "document_kind",
+    srcs = ["document_kind.cpp"],
+    hdrs = ["document_kind.h"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "document_kind_test",
+    srcs = ["document_kind_test.cpp"],
+    deps = [
+        ":document_kind",
+        "@googletest//:gtest_main",
+    ],
+    size = "small",
+)
+

@@ -18,6 +18,6 @@ namespace jobtracker {
     };
 
     std::string_view to_string(const Status status);
-    std::optional<Status> from_string(std::string_view text);
+    std::optional<Status> status_from_string(std::string_view text);
 
 }

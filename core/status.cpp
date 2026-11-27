@@ -34,7 +34,7 @@ namespace jobtracker {
         throw std::logic_error("to_string: Status has no entry in status_names");
     }
 
-    std::optional<Status> from_string(std::string_view text) {
+    std::optional<Status> status_from_string(std::string_view text) {
         auto it = std::ranges::find(status_names, text, &StatusName::name);
         if ( it != status_names.end())
             return it->status;

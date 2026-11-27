@@ -1,4 +1,5 @@
 #include "core/status.h"
+
 #include <algorithm>
 #include <gtest/gtest.h>
 
@@ -9,9 +10,9 @@ struct StatusCase {
 
 class StatusConversionTest : public ::testing::TestWithParam<StatusCase> {};
 
-TEST_P(StatusConversionTest, ConvertsToText) {
+TEST_P(StatusConversionTest, ConvertsToAndFromText) {
     EXPECT_EQ(GetParam().text, jobtracker::to_string(GetParam().status));
-    EXPECT_EQ(GetParam().status, jobtracker::from_string(GetParam().text));
+    EXPECT_EQ(GetParam().status, jobtracker::status_from_string(GetParam().text));
 }
 
 INSTANTIATE_TEST_SUITE_P(AllStatuses, StatusConversionTest, ::testing::Values(
@@ -32,18 +33,18 @@ INSTANTIATE_TEST_SUITE_P(AllStatuses, StatusConversionTest, ::testing::Values(
     }
 );
 
-TEST(AllStatuses, ConvertsToTextReturnsNullopt) {
-    EXPECT_EQ(std::nullopt, jobtracker::from_string("Invalid"));
+TEST(AllStatuses, FromStringRejectsUnknownText) {
+    EXPECT_EQ(std::nullopt, jobtracker::status_from_string("Invalid"));
 }
 
-TEST(StatusRoundTrip, EveryStatusSurvivesRoundTrip) {
+TEST(AllStatuses, EveryStatusSurvivesRoundTrip) {
     for (int i = 0; i < static_cast<int>(jobtracker::Status::EndSentinel); ++i) {
         auto status{static_cast<jobtracker::Status>(i)};
         auto text{jobtracker::to_string(status)};
-        EXPECT_EQ(status, jobtracker::from_string(text));
+        EXPECT_EQ(status, jobtracker::status_from_string(text));
     }
 }
 
-TEST(Status, BadStatusNameThrowsExceptionInFromString) {
+TEST(AllStatuses, ToStringThrowsOnEndSentinel) {
     EXPECT_THROW(jobtracker::to_string(jobtracker::Status::EndSentinel), std::logic_error);
 }
