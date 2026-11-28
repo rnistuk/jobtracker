@@ -7,7 +7,7 @@
 static_assert(std::is_aggregate_v<jobtracker::Document>,
               "Document must stay an aggregate so designated initializers work");
 
-TEST(Document, DefaultDocument) {
+TEST(Document, DefaultKindIsOther) {
     jobtracker::Document sut;
     EXPECT_EQ(sut.kind, jobtracker::DocumentKind::Other);
 }
