@@ -54,3 +54,22 @@ cc_test(
         "@googletest//:gtest_main",
     ],
 )
+
+cc_library(
+    name = "document",
+    hdrs = ["document.h"],
+    visibility = ["//visibility:public"],
+    deps = [":document_kind"],
+)
+
+cc_test(
+    name = "document_test",
+    size = "small",
+    srcs = ["document_test.cpp"],
+    deps = [
+        ":document",
+        ":document_kind",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
