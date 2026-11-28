@@ -23,16 +23,16 @@ namespace jobtracker {
                       "document_kind_names is missing an entry");
     } // namespace
 
-    std::string_view to_string(const DocumentKind kind) {
+    std::string_view to_string(DocumentKind kind) {
         auto it = std::ranges::find(document_kind_names, kind, &DocumentKindName::kind);
         if (it != document_kind_names.end()) {
             return it->name;
         }
 
-        throw std::logic_error("to_string: unknown kind");
+        throw std::logic_error("to_string: DocumentKind has no entry in document_kind_names");
     }
 
-    std::optional<DocumentKind> document_kind_from_string(const std::string_view text) {
+    std::optional<DocumentKind> document_kind_from_string(std::string_view text) {
         auto it = std::ranges::find(document_kind_names, text, &DocumentKindName::name);
         if (it != document_kind_names.end())
             return it->kind;
